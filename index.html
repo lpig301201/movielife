@@ -335,6 +335,45 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
   }
 }
 
+
+/* ================= 電影座標：真正的全寬修正 ================= */
+.coordinates-wrap{
+  display:block !important;
+  width:100% !important;
+}
+.coordinates-main{
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+}
+.coordinates-section .movie-grid{
+  width:100% !important;
+  max-width:none !important;
+  display:grid !important;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr)) !important;
+  gap:16px !important;
+}
+.coordinates-section .movie-card{
+  width:auto !important;
+  min-width:0 !important;
+  min-height:170px;
+}
+.coordinates-section .movie-card h3{
+  font-size:1.18rem;
+  line-height:1.35;
+  word-break:keep-all;
+}
+@media(max-width:680px){
+  .coordinates-section .movie-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+@media(max-width:460px){
+  .coordinates-section .movie-grid{
+    grid-template-columns:1fr !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -345,7 +384,7 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
 <div id="forestMode" class="mode-panel active">
 <section><div class="section-heading"><div><p class="eyebrow">LIFE AREAS</p><h2>八大人生區域</h2></div><p>先從人生經驗出發；同一部電影可以同時長在不同枝幹。</p></div><div class="section-rule"></div><div id="zoneGrid" class="zone-grid"></div></section>
 <section class="visual-chapter"><div class="chapter-art"><img src="connection-illustration.svg" alt="電影節點與人生面向相互連結的抽象插圖"></div><div class="chapter-panel"><p class="eyebrow">CONNECTION MAP</p><h2 class="serif">電影關聯地圖</h2><p>選一部電影，看它與哪些作品共享人生面向、主題與思想關鍵字。電影不是孤島，而是一座座彼此有暗橋相連的島嶼。</p><label>選一部電影<select id="connectionSelect"></select></label><div id="connectionStage" class="connection-stage"></div></div></section>
-<section class="coordinates-section"><div class="section-heading"><div><p class="eyebrow">MOVIE COORDINATES</p><h2>電影座標</h2></div><p id="resultCount"></p></div><div class="section-rule"></div><div class="coordinates-wrap"><div class="coordinates-art"><img src="coordinates-illustration.svg" alt="沿著人生道路散布電影座標的抽象插圖"></div><div class="coordinates-main"><div id="movieGrid" class="movie-grid"></div></div></div></section>
+<section class="coordinates-section"><div class="section-heading"><div><p class="eyebrow">MOVIE COORDINATES</p><h2>電影座標</h2></div><p id="resultCount"></p></div><div class="section-rule"></div><div class="coordinates-wrap"><div class="coordinates-main"><div id="movieGrid" class="movie-grid"></div></div></div></section>
 </div>
 <div id="thoughtMode" class="mode-panel"><section class="thought-shell"><p class="eyebrow">THOUGHT UNIVERSE</p><h2>哲學深如海，廣闊如星雲</h2><p>不再把電影硬塞進固定的十幾個問題。先走進一個哲學領域，再從母題深入，最後看每部電影自己留下了什麼問題。</p><div id="domainGrid" class="domain-grid"></div><div class="thought-browser"><div class="mother-panel"><h3>核心母題</h3><div id="motherList" class="mother-list"><p class="muted">先選一個思想領域。</p></div></div><div class="thought-results"><h3 id="thoughtResultTitle">電影與問題</h3><div id="thoughtResults"><p class="muted">電影會在這裡浮出來。</p></div></div></div></section></div>
 
