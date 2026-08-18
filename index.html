@@ -77,6 +77,22 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
 .mood-card h3{margin:.1em 0 .4em}.mood-card p{font-size:.88rem;margin:0}
 @media(max-width:820px){.journey-editor{grid-template-columns:1fr}.mood-results{grid-template-columns:1fr}.footprint-toolbar{grid-template-columns:1fr}.journey-grid{grid-template-columns:1fr}}
 
+
+/* ================= V8.2 mood links + yearly review ================= */
+.mood-picker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mood-check{display:flex;gap:8px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:.9rem;font-weight:700}
+.mood-check input{width:auto;margin-top:2px}
+.review-shell{margin:50px 0;padding:30px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(135deg,#f7efe0,#edf0e8);box-shadow:var(--shadow-soft)}
+.review-shell h2{font-family:Georgia,"Noto Serif TC",serif;font-size:clamp(2rem,4vw,3rem);margin:.2em 0}
+.review-controls{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:18px 0}
+.review-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:20px 0}
+.stat-card{padding:16px;border-radius:16px;background:rgba(255,255,255,.7);border:1px solid var(--line)}
+.stat-card strong{display:block;font-family:Georgia,serif;font-size:2rem;color:var(--forest)}
+.review-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.review-item{padding:16px;border-radius:16px;background:rgba(255,255,255,.72);border:1px solid var(--line)}
+.review-item h3{margin:.1em 0 .5em}.review-item p{color:var(--muted);line-height:1.65;margin:.3em 0}
+@media(max-width:720px){.mood-picker,.review-list{grid-template-columns:1fr}.review-stats{grid-template-columns:repeat(2,1fr)}}
+
 </style>
 </head>
 <body>
@@ -132,6 +148,19 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
     <div id="journeyTimeline" class="timeline"></div>
   </section>
 
+
+  <section class="review-shell">
+    <p class="eyebrow">YEAR IN CINEMA</p>
+    <h2>我的年度電影回望</h2>
+    <p>不是統計你「看了多少」，而是看看這一年哪些電影、感受與問題反覆回到你身邊。</p>
+    <div class="review-controls">
+      <label>年份<select id="reviewYear"></select></label>
+      <button id="renderReviewBtn" type="button">生成年度回望</button>
+    </div>
+    <div id="reviewStats" class="review-stats"></div>
+    <div id="reviewList" class="review-list"></div>
+  </section>
+
   <section class="mood-shell">
     <p class="eyebrow">WHAT DO I WANT TO THINK ABOUT TONIGHT?</p>
     <h2>今晚，我想想什麼？</h2>
@@ -145,7 +174,8 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
 <div id="addMode" class="mode-panel"><section class="add-intro"><p class="eyebrow">ADD A MOVIE</p><h2 class="serif">新增電影</h2><p>V7 仍然資料驅動：新增電影不需要碰網站程式。人生面向與思想領域都由資料自動建立連結。</p></section><section class="add-layout"><div class="add-form"><label>電影名稱<input id="genTitle"></label><label>年份<input id="genYear" type="number" min="1888" max="2100"></label><div><h3>🌲 人生面向</h3><div id="genLifeTags" class="check-grid"></div></div><label>核心關鍵字<input id="genThemes" placeholder="理解、觀看、偏見、身分"></label><div><h3>🌌 思想領域</h3><div id="genThoughtDomains" class="check-grid"></div></div><label>💭 我的觀看<textarea id="genView"></textarea></label><label>❓ 這部電影自己的問題<textarea id="genQuestions" placeholder="一行一個問題"></textarea></label><label>🌌 思想關鍵字<input id="genPhilosophy" placeholder="自我、意識、自由、記憶…"></label><label>📖 完整感想<textarea id="genReview"></textarea></label><div class="note-actions"><button id="genPreviewBtn">產生資料預覽</button><button id="genDownloadBtn">下載更新後 movies-data.js</button></div><p id="genStatus" class="note-status"></p></div><aside class="add-help"><h3>資料預覽</h3><pre id="genOutput">填好資料後按「產生資料預覽」。</pre><p class="muted">下載新的 <code>movies-data.js</code> 後，回 GitHub 覆蓋舊檔並 Commit；<code>index.html</code> 不需要跟著改。</p></aside></section></div>
 </main>
 <dialog id="movieDialog"><button class="dialog-close" id="dialogClose" aria-label="關閉">×</button><div id="dialogContent"></div></dialog>
-<footer><div class="wrap"><p>🌍 世界 → 🤝 他人 → 🪞 自我 → 🌙 記憶 → 🌌 存在 → 🎭 表達</p><strong>所有枝條最後，都可能重新交會在同一個問題：我們要如何活著？</strong><p>V8 · Film Forest × Thought Universe</p></div></footer>
+<footer><div class="wrap"><p>🌍 世界 → 🤝 他人 → 🪞 自我 → 🌙 記憶 → 🌌 存在 → 🎭 表達</p><strong>所有枝條最後，都可能重新交會在同一個問題：我們要如何活著？</strong><p>V8.2 · Film Forest × Thought Universe</p></div></footer>
+<script src="mood-data.js"></script>
 <script src="movies-data.js"></script><script src="thought-data.js"></script>
 <script>
 const DATA=window.MOVIE_MAP_DATA;const THOUGHT=window.THOUGHT_MAP_DATA;let selectedZone='all';let USER_NOTES={};
@@ -160,18 +190,26 @@ function selectDomain(id,button){document.querySelectorAll('.domain-card').forEa
 function selectMother(d,mother,b){document.querySelectorAll('.mother-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');const films=DATA.movies.map(m=>({m,s:domainScore(m,d)+motherScore(m,mother)})).filter(x=>x.s>1).sort((a,b)=>b.s-a.s).slice(0,14);document.getElementById('thoughtResultTitle').textContent=mother.title;const box=document.getElementById('thoughtResults');box.innerHTML=films.length?'':'<p class="muted">這個母題還沒有電影。</p>';films.forEach(({m})=>{const note=noteFor(m.title);const own=(m.questions||[])[0]||(m.philosophyQuestions||[])[0]||note.questions?.[0]||'';const el=document.createElement('div');el.className='thought-film';el.innerHTML=`<button><b>${esc(m.title)} <span style="opacity:.55;font-weight:500">${m.year}</span></b><p>${esc(own||'這部電影尚未留下自己的問題。')}</p></button>`;el.querySelector('button').onclick=()=>openMovie(m);box.appendChild(el)})}
 function formatReview(t){if(!t)return'<span class="muted">尚未撰寫。</span>';return t.split(/\n+/).filter(Boolean).map(p=>`<p>${esc(p)}</p>`).join('')}function openMovie(m){const n=noteFor(m.title);const inferred=THOUGHT.domains.map(d=>({d,s:domainScore(m,d)})).filter(x=>x.s>0).sort((a,b)=>b.s-a.s).slice(0,5).map(x=>x.d);document.getElementById('dialogContent').innerHTML=`<p class="eyebrow">${inferred.map(d=>d.icon+' '+d.title).join(' × ')||'MOVIE COORDINATE'}</p><h3 class="dialog-title">${esc(m.title)}</h3><p class="dialog-meta">${m.year}</p><div class="dialog-block"><h4>人生面向</h4><div class="chips">${m.tags.map(t=>`<span class="chip">${esc(t)}</span>`).join('')}</div></div><div class="dialog-block"><h4>💭 我的觀看</h4><div class="my-view">${n.view?esc(n.view):'<span class="muted">尚未記錄。</span>'}</div></div><div class="dialog-block"><h4>❓ 這部電影留下的問題</h4>${n.questions.length?`<ul class="question-list">${n.questions.map(q=>`<li>${esc(q)}</li>`).join('')}</ul>`:'<span class="muted">尚未記錄。</span>'}</div><div class="dialog-block"><h4>🌌 思想座標</h4><div class="chips">${[...(n.philosophy||[]),...inferred.map(d=>d.title)].filter((v,i,a)=>a.indexOf(v)===i).map(t=>`<span class="chip">${esc(t)}</span>`).join('')}</div></div><div class="dialog-block"><h4>📖 完整感想</h4><div class="review-text">${formatReview(n.review)}</div></div>`;document.getElementById('movieDialog').showModal()}
 function loadNotes(){try{return JSON.parse(localStorage.getItem('howWeLiveV7Notes')||'{}')}catch(e){return{}}}function persistNotes(){localStorage.setItem('howWeLiveV7Notes',JSON.stringify(USER_NOTES))}function initNotes(){USER_NOTES=loadNotes();const s=document.getElementById('noteMovieSelect');[...DATA.movies].sort((a,b)=>a.title.localeCompare(b.title,'zh-Hant')).forEach(m=>s.add(new Option(`${m.title} (${m.year})`,m.title)));const els={view:noteView,questions:noteQuestions,philosophy:notePhilosophy,review:noteReview};function load(){const n=noteFor(s.value);els.view.value=n.view||'';els.questions.value=(n.questions||[]).join('\n');els.philosophy.value=(n.philosophy||[]).join('、');els.review.value=n.review||'';noteStatus.textContent=''}s.onchange=load;load();saveNoteBtn.onclick=()=>{USER_NOTES[s.value]={view:els.view.value.trim(),questions:els.questions.value.split('\n').map(x=>x.trim()).filter(Boolean),philosophy:els.philosophy.value.split(/[、,，]/).map(x=>x.trim()).filter(Boolean),review:els.review.value.trim()};persistNotes();noteStatus.textContent='✓ 已儲存在這台瀏覽器。'};clearNoteBtn.onclick=()=>{delete USER_NOTES[s.value];persistNotes();load();noteStatus.textContent='已清除。'};exportNotesBtn.onclick=()=>{const blob=new Blob([JSON.stringify(USER_NOTES,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='how-we-live-v8-notes.json';a.click()};importNotesInput.onchange=async e=>{try{USER_NOTES={...USER_NOTES,...JSON.parse(await e.target.files[0].text())};persistNotes();load();noteStatus.textContent='✓ 已匯入。'}catch{noteStatus.textContent='匯入失敗。'}}}
-function initAdd(){const life=genLifeTags;DATA.zones.flatMap(z=>z.tags.map(tag=>({z,tag}))).forEach(({z,tag})=>{const l=document.createElement('label');l.className='check-item';l.innerHTML=`<input type="checkbox" name="life" value="${esc(tag)}"><span>${z.icon} ${esc(tag)}<small style="display:block;color:var(--muted)">${esc(z.name)}</small></span>`;life.appendChild(l)});THOUGHT.domains.forEach(d=>{const l=document.createElement('label');l.className='check-item';l.innerHTML=`<input type="checkbox" name="domain" value="${d.id}"><span>${d.icon} ${esc(d.title)}</span>`;genThoughtDomains.appendChild(l)});function build(){return{title:genTitle.value.trim(),year:Number(genYear.value)||new Date().getFullYear(),tags:[...document.querySelectorAll('[name=life]:checked')].map(x=>x.value),themes:genThemes.value.split(/[、,，]/).map(x=>x.trim()).filter(Boolean),philosophy:genPhilosophy.value.split(/[、,，]/).map(x=>x.trim()).filter(Boolean),thoughtDomains:[...document.querySelectorAll('[name=domain]:checked')].map(x=>x.value),philosophyQuestions:[],myView:genView.value.trim(),questions:genQuestions.value.split('\n').map(x=>x.trim()).filter(Boolean),review:genReview.value.trim()}}function preview(){const m=build();if(!m.title){genStatus.textContent='請先填片名。';return null}if(DATA.movies.some(x=>x.title===m.title)){genStatus.textContent='這部電影已經存在。';return null}if(!m.tags.length){genStatus.textContent='至少勾一個人生面向。';return null}genOutput.textContent=JSON.stringify(m,null,2);genStatus.textContent='✓ 資料格式正常。';return m}genPreviewBtn.onclick=preview;genDownloadBtn.onclick=()=>{const m=preview();if(!m)return;const next=JSON.parse(JSON.stringify(DATA));next.movies.push(m);next.movies.sort((a,b)=>a.title.localeCompare(b.title,'zh-Hant'));const oldQs=window.PHILOSOPHY_QUESTIONS||[];const content=`// 我們如何活著｜V8 電影資料\nwindow.MOVIE_MAP_DATA = ${JSON.stringify(next,null,2)};\n\nwindow.PHILOSOPHY_QUESTIONS = ${JSON.stringify(oldQs,null,2)};\n`;const blob=new Blob([content],{type:'text/javascript'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='movies-data.js';a.click();genStatus.textContent=`✓ 已產生包含《${m.title}》的新資料檔。`}}
+function initAdd(){
+
+  const moodPicker=document.getElementById('addMoodPicker');
+  if(moodPicker){
+    MOODS.forEach(m=>{const l=document.createElement('label');l.className='mood-check';l.innerHTML=`<input type="checkbox" name="addMood" value="${m.id}"><span>${m.label}</span>`;moodPicker.appendChild(l)});
+  }
+const life=genLifeTags;DATA.zones.flatMap(z=>z.tags.map(tag=>({z,tag}))).forEach(({z,tag})=>{const l=document.createElement('label');l.className='check-item';l.innerHTML=`<input type="checkbox" name="life" value="${esc(tag)}"><span>${z.icon} ${esc(tag)}<small style="display:block;color:var(--muted)">${esc(z.name)}</small></span>`;life.appendChild(l)});THOUGHT.domains.forEach(d=>{const l=document.createElement('label');l.className='check-item';l.innerHTML=`<input type="checkbox" name="domain" value="${d.id}"><span>${d.icon} ${esc(d.title)}</span>`;genThoughtDomains.appendChild(l)});function build(){return{title:genTitle.value.trim(),year:Number(genYear.value)||new Date().getFullYear(),tags:[...document.querySelectorAll('[name=life]:checked')].map(x=>x.value),themes:genThemes.value.split(/[、,，]/).map(x=>x.trim()).filter(Boolean),philosophy:genPhilosophy.value.split(/[、,，]/).map(x=>x.trim()).filter(Boolean),thoughtDomains:[...document.querySelectorAll('[name=domain]:checked')].map(x=>x.value),philosophyQuestions:[],myView:genView.value.trim(),questions:genQuestions.value.split('\n').map(x=>x.trim()).filter(Boolean),review:genReview.value.trim()}}function preview(){const m=build();if(!m.title){genStatus.textContent='請先填片名。';return null}if(DATA.movies.some(x=>x.title===m.title)){genStatus.textContent='這部電影已經存在。';return null}if(!m.tags.length){genStatus.textContent='至少勾一個人生面向。';return null}genOutput.textContent=JSON.stringify(m,null,2);genStatus.textContent='✓ 資料格式正常。';return m}genPreviewBtn.onclick=preview;genDownloadBtn.onclick=()=>{const m=preview();if(!m)return;const next=JSON.parse(JSON.stringify(DATA));next.movies.push(m);next.movies.sort((a,b)=>a.title.localeCompare(b.title,'zh-Hant'));const oldQs=window.PHILOSOPHY_QUESTIONS||[];const content=`// 我們如何活著｜V8 電影資料\nwindow.MOVIE_MAP_DATA = ${JSON.stringify(next,null,2)};\n\nwindow.PHILOSOPHY_QUESTIONS = ${JSON.stringify(oldQs,null,2)};\n`;const blob=new Blob([content],{type:'text/javascript'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='movies-data.js';a.click();genStatus.textContent=`✓ 已產生包含《${m.title}》的新資料檔。`}}
 function initModes(){document.querySelectorAll('.mode-btn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.mode-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.mode-panel').forEach(x=>x.classList.remove('active'));document.getElementById(b.dataset.mode+'Mode').classList.add('active');window.scrollTo({top:document.getElementById('explore').offsetTop-8,behavior:'smooth'})});goThoughtBtn.onclick=()=>document.querySelector('[data-mode=thought]').click()}
 
 /* ================= V8 思想足跡 ================= */
 let JOURNEY = [];
-const MOODS = [
-  {label:"我有點迷惘", keys:["迷惘","自我","人生","存在","選擇"]},
-  {label:"我想碰觸記憶", keys:["記憶","時間","失去","遺忘"]},
-  {label:"我想理解愛", keys:["愛","關係","親密","錯過"]},
-  {label:"我想想自由", keys:["自由","選擇","控制","制度"]},
-  {label:"我想被狠狠哲學一下", keys:["存在","意識","真實","自我","荒謬","科技"]},
-  {label:"我只想好好活著", keys:["日常","生命","家庭","陪伴","幸福"]}
+const MOODS = window.MOOD_DATA || [
+  {id:"lost",label:"我有點迷惘"},
+  {id:"memory",label:"我想碰觸記憶"},
+  {id:"love",label:"我想理解愛"},
+  {id:"freedom",label:"我想想自由"},
+  {id:"deep",label:"我想被狠狠哲學一下"},
+  {id:"living",label:"我只想好好活著"},
+  {id:"comfort",label:"我今天想被安慰一下"},
+  {id:"solitude",label:"我想和孤獨待一會兒"}
 ];
 function loadJourney(){try{return JSON.parse(localStorage.getItem('howWeLiveV8Journey')||'[]')}catch(e){return[]}}
 function saveJourneyStore(){localStorage.setItem('howWeLiveV8Journey',JSON.stringify(JOURNEY))}
@@ -179,10 +217,22 @@ function movieThoughtWords(m){
   const domains=(m.thoughtDomains||[]).map(id=>THOUGHT.domains.find(d=>d.id===id)?.title||'');
   return [...(m.tags||[]),...(m.themes||[]),...(m.philosophy||[]),...domains,...(m.questions||[])].join(' ');
 }
-function renderMood(keys,label){
-  const scored=DATA.movies.map(m=>({m,score:keys.reduce((s,k)=>s+(movieThoughtWords(m).includes(k)?1:0),0)}))
-    .filter(x=>x.score>0).sort((a,b)=>b.score-a.score||a.m.title.localeCompare(b.m.title,'zh-Hant')).slice(0,6);
-  moodResults.innerHTML=scored.length?scored.map(({m})=>`<article class="mood-card" data-title="${esc(m.title)}"><h3>${esc(m.title)}</h3><p>${m.year} · ${(m.themes||[]).slice(0,4).map(esc).join('・')}</p></article>`).join(''):'<p>目前還沒有適合的電影座標。</p>';
+function renderMood(mood){
+  const legacyKeys={
+    lost:["迷惘","自我","人生","存在","選擇"],memory:["記憶","時間","失去","遺忘"],
+    love:["愛","關係","親密","錯過"],freedom:["自由","選擇","控制","制度"],
+    deep:["存在","意識","真實","自我","荒謬","科技"],living:["日常","生命","家庭","陪伴","幸福"],
+    comfort:["陪伴","家庭","日常","希望","友情"],solitude:["孤獨","記憶","存在","日常"]
+  };
+  const explicit=DATA.movies.filter(m=>(m.moods||[]).includes(mood.id));
+  let picks=explicit;
+  if(!picks.length){
+    const keys=legacyKeys[mood.id]||[];
+    picks=DATA.movies.map(m=>({m,score:keys.reduce((s,k)=>s+(movieThoughtWords(m).includes(k)?1:0),0)}))
+      .filter(x=>x.score>0).sort((a,b)=>b.score-a.score).map(x=>x.m);
+  }
+  picks=picks.slice(0,6);
+  moodResults.innerHTML=picks.length?picks.map(m=>`<article class="mood-card" data-title="${esc(m.title)}"><h3>${esc(m.title)}</h3><p>${m.year} · ${(m.themes||[]).slice(0,4).map(esc).join('・')}</p></article>`).join(''):'<p>這個狀態還沒有連到電影。</p>';
   moodResults.querySelectorAll('.mood-card').forEach(el=>el.onclick=()=>openMovie(DATA.movies.find(m=>m.title===el.dataset.title)));
 }
 function renderJourney(){
@@ -200,6 +250,34 @@ function renderJourney(){
     ${x.tags?.length?`<div class="timeline-chips">${x.tags.map(t=>`<span class="chip">${esc(t)}</span>`).join('')}</div>`:''}
   </article>`).join('');
 }
+
+function renderYearReview(){
+  const year=reviewYear.value;
+  const rows=JOURNEY.filter(x=>(x.date||'').startsWith(year));
+  const unique=[...new Set(rows.map(x=>x.title))];
+  const rewatches=rows.filter(x=>x.type==='rewatch').length;
+  const feelings={};const tags={};
+  rows.forEach(x=>{if(x.feeling)feelings[x.feeling]=(feelings[x.feeling]||0)+1;(x.tags||[]).forEach(t=>tags[t]=(tags[t]||0)+1)});
+  const topFeeling=Object.entries(feelings).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—';
+  const topTag=Object.entries(tags).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—';
+  reviewStats.innerHTML=[
+    ['觀看紀錄',rows.length],['不同電影',unique.length],['重新觀看',rewatches],['反覆出現的思想',topTag]
+  ].map(([k,v])=>`<div class="stat-card"><span>${k}</span><strong>${esc(String(v))}</strong></div>`).join('');
+  if(!rows.length){reviewList.innerHTML='<div class="timeline-empty">這一年還沒有留下觀看足跡。</div>';return}
+  reviewList.innerHTML=unique.map(title=>{
+    const rs=rows.filter(x=>x.title===title);const last=rs.sort((a,b)=>(b.date||'').localeCompare(a.date||''))[0];
+    return `<article class="review-item"><h3>${esc(title)}</h3><p>${rs.length>1?`這一年留下 ${rs.length} 次觀看。`:'留下 1 次觀看。'}</p>${last.feeling?`<p>🎭 ${esc(last.feeling)}</p>`:''}${last.view?`<p>「${esc(last.view)}」</p>`:''}</article>`
+  }).join('');
+}
+function initYearReview(){
+  const years=[...new Set(JOURNEY.map(x=>(x.date||'').slice(0,4)).filter(Boolean))].sort().reverse();
+  const current=String(new Date().getFullYear());
+  if(!years.includes(current))years.unshift(current);
+  years.forEach(y=>reviewYear.add(new Option(y,y)));
+  renderReviewBtn.onclick=renderYearReview;
+  renderYearReview();
+}
+
 function initJourney(){
   JOURNEY=loadJourney();
   const sorted=[...DATA.movies].sort((a,b)=>a.title.localeCompare(b.title,'zh-Hant'));
@@ -223,8 +301,9 @@ function initJourney(){
     const blob=new Blob([JSON.stringify(JOURNEY,null,2)],{type:'application/json'});
     const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='how-we-live-v8-journey.json';a.click();
   };
-  MOODS.forEach((m,i)=>{const b=document.createElement('button');b.className='mood-btn';b.type='button';b.textContent=m.label;b.onclick=()=>{document.querySelectorAll('.mood-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderMood(m.keys,m.label)};moodButtons.appendChild(b);if(i===0){b.classList.add('active');renderMood(m.keys,m.label)}});
+  MOODS.forEach((m,i)=>{const b=document.createElement('button');b.className='mood-btn';b.type='button';b.textContent=m.label;b.onclick=()=>{document.querySelectorAll('.mood-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderMood(m)};moodButtons.appendChild(b);if(i===0){b.classList.add('active');renderMood(m)}});
   renderJourney();
+  initYearReview();
 }
 
 function init(){heroMovieCount.textContent=`🎬 ${DATA.movies.length}+ 電影座標`;DATA.zones.forEach(z=>zoneSelect.add(new Option(`${z.icon} ${z.name}`,z.name)));searchInput.oninput=renderMovies;zoneSelect.onchange=e=>{selectedZone=e.target.value;renderMovies()};renderZones();renderMovies();const cs=connectionSelect;[...DATA.movies].sort((a,b)=>a.title.localeCompare(b.title,'zh-Hant')).forEach(m=>cs.add(new Option(m.title,m.title)));cs.onchange=()=>renderConnection(cs.value);if(DATA.movies.length){cs.value=DATA.movies.find(m=>m.title==='千年女優')?.title||DATA.movies[0].title;renderConnection(cs.value)}renderDomains();initNotes();initAdd();initJourney();initModes();dialogClose.onclick=()=>movieDialog.close();document.addEventListener('keydown',e=>{if(e.key==='Escape'&&movieDialog.open)movieDialog.close()})}init();
