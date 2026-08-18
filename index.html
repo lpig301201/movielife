@@ -78,7 +78,7 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
 @media(max-width:820px){.journey-editor{grid-template-columns:1fr}.mood-results{grid-template-columns:1fr}.footprint-toolbar{grid-template-columns:1fr}.journey-grid{grid-template-columns:1fr}}
 
 
-/* ================= V8.2 mood links + yearly review ================= */
+/* ================= V8.3.1 mood links + yearly review ================= */
 .mood-picker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .mood-check{display:flex;gap:8px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:.9rem;font-weight:700}
 .mood-check input{width:auto;margin-top:2px}
@@ -93,13 +93,186 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
 .review-item h3{margin:.1em 0 .5em}.review-item p{color:var(--muted);line-height:1.65;margin:.3em 0}
 @media(max-width:720px){.mood-picker,.review-list{grid-template-columns:1fr}.review-stats{grid-template-columns:repeat(2,1fr)}}
 
+
+/* ================= V8.3.1 Mood Manager ================= */
+.mood-manager-shell{
+  margin:36px 0 54px;
+  padding:28px;
+  border:1px solid var(--line);
+  border-radius:26px;
+  background:linear-gradient(135deg,#f7f1e8,#eef1ea);
+  box-shadow:var(--shadow-soft);
+}
+.mood-manager-shell h2{
+  font-family:Georgia,"Noto Serif TC",serif;
+  font-size:clamp(2rem,4vw,3rem);
+  margin:.2em 0;
+}
+.mood-manager-shell>p{color:var(--muted);line-height:1.75;max-width:760px}
+.mood-manager-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);
+  gap:18px;
+  margin-top:20px;
+}
+.mood-list{
+  display:grid;
+  gap:10px;
+}
+.mood-row{
+  display:grid;
+  grid-template-columns:42px 1fr 1fr auto;
+  gap:8px;
+  align-items:center;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+}
+.mood-order{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.mood-order button,.mood-delete{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:8px;
+  padding:4px 7px;
+  cursor:pointer;
+}
+.mood-delete{color:#8d3d3d}
+.mood-manager-side{
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,255,255,.72);
+}
+.mood-manager-side h3{margin-top:0}
+.mood-manager-side p{color:var(--muted);line-height:1.65}
+.mood-manager-side .note-actions{margin-top:14px}
+.mood-add-box{
+  margin-top:18px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+  display:grid;
+  gap:10px;
+}
+.mood-add-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+@media(max-width:820px){
+  .mood-manager-grid{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  .mood-row{grid-template-columns:38px 1fr}
+  .mood-row .mood-id,.mood-row .mood-delete{grid-column:2}
+  .mood-add-grid{grid-template-columns:1fr}
+}
+
+
+/* ================= V8.3.1.1 Art Direction Polish ================= */
+/* Hero：把原始插圖右側的輪播箭頭／白色殘邊裁出畫面，不修改插圖主體 */
+.hero-art{background:#132720}
+.hero-art img{
+  width:112%;
+  max-width:none;
+  object-position:left center;
+  transform:none;
+}
+.hero-art figcaption{
+  left:20px;right:20px;bottom:16px;
+  padding:10px 14px;
+  background:rgba(12,28,24,.62);
+  border:1px solid rgba(255,255,255,.08);
+  font-size:.96rem;
+  line-height:1.55;
+}
+
+/* 關聯地圖：把「資訊圖」明確做成章節插圖，避免與八大人生區域的繪畫搶角色 */
+.visual-chapter .chapter-art{
+  position:relative;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 76% 18%,rgba(215,176,107,.18),transparent 30%),
+    linear-gradient(145deg,#18342c,#263f36);
+}
+.visual-chapter .chapter-art img{
+  width:92%;
+  height:92%;
+  object-fit:contain;
+  padding:18px;
+  border-radius:24px;
+}
+.visual-chapter .chapter-art:after{
+  content:"";
+  position:absolute;
+  right:-8px;bottom:-16px;
+  width:120px;height:230px;
+  background:url("filmstrip-accent.jpg") center/cover no-repeat;
+  opacity:.10;
+  transform:rotate(8deg);
+  pointer-events:none;
+}
+
+/* 電影座標：維持「地圖／路徑」而非另一張電影劇照 */
+.coordinates-art{
+  position:relative;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 24% 20%,rgba(215,176,107,.16),transparent 28%),
+    linear-gradient(145deg,#edf0e6,#dfe8df);
+  border:1px solid var(--line);
+}
+.coordinates-art img{
+  width:92%;
+  height:92%;
+  object-fit:contain;
+  padding:18px;
+  border-radius:22px;
+}
+
+/* 今晚：讓月夜膠卷成為淡淡的章節識別，不蓋過按鈕與文字 */
+.mood-shell{
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(32,49,44,.98),rgba(49,71,63,.93)),
+    url("moon-filmstrip-accent.jpg") right center/300px auto no-repeat;
+}
+.mood-shell:after{
+  content:"";
+  position:absolute;inset:0;
+  background:url("moon-filmstrip-accent.jpg") right 24px center/260px auto no-repeat;
+  opacity:.10;
+  pointer-events:none;
+}
+.mood-shell>*{position:relative;z-index:1}
+
+/* 整體插圖節奏：圖片有角色，資料卡保持安靜 */
+.zone-cover:after{
+  content:"";
+  position:absolute;inset:0;
+  box-shadow:inset 0 -34px 50px rgba(15,32,28,.08);
+  pointer-events:none;
+}
+@media(max-width:680px){
+  .hero-art img{width:114%}
+  .hero-art figcaption{font-size:.9rem;left:12px;right:12px;bottom:12px}
+  .visual-chapter .chapter-art img,.coordinates-art img{width:96%;height:96%;padding:10px}
+}
+
 </style>
 </head>
 <body>
 <header class="hero"><div class="wrap hero-grid"><div><p class="eyebrow" style="color:#dfbf8e">MOVIE × LIFE × THOUGHT</p><h1 class="serif">我們如何活著</h1><p class="subtitle">電影不是被塞進分類，而是在世界、關係、記憶、自我與存在之間留下座標；哲學也不是一個抽屜，而是連接整座電影森林的地下根系。</p><div class="stats"><span class="stat">🌲 8 大人生區域</span><span class="stat" id="heroMovieCount">🎬 電影座標</span><span class="stat">🌌 14 個思想領域</span></div><p class="hero-quote">一部電影，一個提問；一段屬於自己的生命旅程。</p><div class="hero-actions"><a class="btn primary" href="#explore">探索電影森林</a><button class="btn ghost" id="goThoughtBtn">進入思想宇宙</button></div></div><figure class="hero-art"><img src="hero-cinema-illustration.jpg" alt="坐在導演椅上眺望遠方的觀影者與電影放映機"><figcaption>不是為了找到標準答案，而是看看一部電影能把我們帶到多遠。</figcaption></figure></div></header>
 <main class="wrap" id="explore">
 <section class="toolbar"><label>搜尋電影<input id="searchInput" type="search" placeholder="片名、主題、思想關鍵字…"></label><label>篩選人生區域<select id="zoneSelect"><option value="all">全部區域</option></select></label></section>
-<section class="mode-switch"><button class="mode-btn active" data-mode="forest">🌲 電影森林</button><button class="mode-btn" data-mode="thought">🌌 思想宇宙</button><button class="mode-btn" data-mode="notes">✍️ 我的電影筆記</button><button class="mode-btn" data-mode="footprint">🧭 思想足跡</button><button class="mode-btn" data-mode="add">➕ 新增電影</button></section>
+<section class="mode-switch"><button class="mode-btn active" data-mode="forest">🌲 電影森林</button><button class="mode-btn" data-mode="thought">🌌 思想宇宙</button><button class="mode-btn" data-mode="notes">✍️ 我的電影筆記</button><button class="mode-btn" data-mode="footprint">🧭 思想足跡</button><button class="mode-btn" data-mode="moods">🏷️ 管理今晚標籤</button><button class="mode-btn" data-mode="add">➕ 新增電影</button></section>
 <div id="forestMode" class="mode-panel active">
 <section><div class="section-heading"><div><p class="eyebrow">LIFE AREAS</p><h2>八大人生區域</h2></div><p>先從人生經驗出發；同一部電影可以同時長在不同枝幹。</p></div><div class="section-rule"></div><div id="zoneGrid" class="zone-grid"></div></section>
 <section class="visual-chapter"><div class="chapter-art"><img src="connection-illustration.svg" alt="電影節點與人生面向相互連結的抽象插圖"></div><div class="chapter-panel"><p class="eyebrow">CONNECTION MAP</p><h2 class="serif">電影關聯地圖</h2><p>選一部電影，看它與哪些作品共享人生面向、主題與思想關鍵字。電影不是孤島，而是一座座彼此有暗橋相連的島嶼。</p><label>選一部電影<select id="connectionSelect"></select></label><div id="connectionStage" class="connection-stage"></div></div></section>
@@ -170,11 +343,52 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
   </section>
 </div>
 
+
+<div id="moodsMode" class="mode-panel">
+  <section class="mood-manager-shell">
+    <p class="eyebrow">MOOD MANAGER</p>
+    <h2>管理今晚標籤</h2>
+    <p>這些標籤會同時出現在「今晚，我想想什麼？」與新增電影頁。你可以新增、改名、調整順序或刪除，最後下載新版 <code>mood-data.js</code> 回 GitHub 覆蓋即可。</p>
+
+    <div class="mood-manager-grid">
+      <div>
+        <div id="moodManagerList" class="mood-list"></div>
+
+        <div class="mood-add-box">
+          <h3>＋ 新增標籤</h3>
+          <div class="mood-add-grid">
+            <label>顯示名稱
+              <input id="newMoodLabel" type="text" placeholder="例如：我想面對失去">
+            </label>
+            <label>ID
+              <input id="newMoodId" type="text" placeholder="例如：loss">
+            </label>
+          </div>
+          <div class="note-actions">
+            <button id="addMoodBtn" type="button">新增標籤</button>
+          </div>
+          <p id="moodManagerStatus" class="note-status"></p>
+        </div>
+      </div>
+
+      <aside class="mood-manager-side">
+        <h3>更新方式</h3>
+        <p>管理完成後，下載新的 <code>mood-data.js</code>，回 GitHub repository 覆蓋舊檔並 Commit。</p>
+        <p>不需要修改 <code>index.html</code>。</p>
+        <div class="note-actions vertical">
+          <button id="downloadMoodDataBtn" type="button">下載 mood-data.js</button>
+          <button id="resetMoodDraftBtn" type="button" class="secondary">還原目前網站標籤</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+</div>
+
 <div id="notesMode" class="mode-panel"><section class="notes-intro"><p class="eyebrow">MY CINEMA NOTES</p><h2 class="serif">我的電影筆記</h2><p>這不是影評作業，而是「此刻的我」看完電影後留下的思想痕跡。筆記先存在這台瀏覽器，也可匯出備份。</p></section><section class="notes-layout"><div class="note-editor"><label>選擇電影<select id="noteMovieSelect"></select></label><label>💭 我的觀看<textarea id="noteView" rows="5"></textarea></label><label>❓ 電影留給我的問題<textarea id="noteQuestions" rows="6" placeholder="一行一個問題"></textarea></label><label>🌌 思想座標<input id="notePhilosophy" type="text" placeholder="記憶、自我、時間、存在…"></label><label>📖 完整感想<textarea id="noteReview" rows="10"></textarea></label><div class="note-actions"><button id="saveNoteBtn">儲存筆記</button><button id="clearNoteBtn" class="secondary">清除筆記</button><button id="exportNotesBtn">匯出 JSON</button><label class="import-label">匯入 JSON<input id="importNotesInput" type="file" accept=".json,application/json" style="display:none"></label></div><p id="noteStatus" class="note-status"></p></div><aside class="note-help"><h3>筆記會如何使用？</h3><p class="muted">電影詳細頁會優先顯示你在瀏覽器留下的內容；正式想公開的內容，再寫進 <code>movies-data.js</code> 即可。</p><hr><p class="muted">幾年後重看同一部電影，你也可以直接改寫。這張地圖可以留下思想的年輪。</p></aside></section></div>
 <div id="addMode" class="mode-panel"><section class="add-intro"><p class="eyebrow">ADD A MOVIE</p><h2 class="serif">新增電影</h2><p>V7 仍然資料驅動：新增電影不需要碰網站程式。人生面向與思想領域都由資料自動建立連結。</p></section><section class="add-layout"><div class="add-form"><label>電影名稱<input id="genTitle"></label><label>年份<input id="genYear" type="number" min="1888" max="2100"></label><div><h3>🌲 人生面向</h3><div id="genLifeTags" class="check-grid"></div></div><label>核心關鍵字<input id="genThemes" placeholder="理解、觀看、偏見、身分"></label><div><h3>🌌 思想領域</h3><div id="genThoughtDomains" class="check-grid"></div></div><label>💭 我的觀看<textarea id="genView"></textarea></label><label>❓ 這部電影自己的問題<textarea id="genQuestions" placeholder="一行一個問題"></textarea></label><label>🌌 思想關鍵字<input id="genPhilosophy" placeholder="自我、意識、自由、記憶…"></label><label>📖 完整感想<textarea id="genReview"></textarea></label><div class="note-actions"><button id="genPreviewBtn">產生資料預覽</button><button id="genDownloadBtn">下載更新後 movies-data.js</button></div><p id="genStatus" class="note-status"></p></div><aside class="add-help"><h3>資料預覽</h3><pre id="genOutput">填好資料後按「產生資料預覽」。</pre><p class="muted">下載新的 <code>movies-data.js</code> 後，回 GitHub 覆蓋舊檔並 Commit；<code>index.html</code> 不需要跟著改。</p></aside></section></div>
 </main>
 <dialog id="movieDialog"><button class="dialog-close" id="dialogClose" aria-label="關閉">×</button><div id="dialogContent"></div></dialog>
-<footer><div class="wrap"><p>🌍 世界 → 🤝 他人 → 🪞 自我 → 🌙 記憶 → 🌌 存在 → 🎭 表達</p><strong>所有枝條最後，都可能重新交會在同一個問題：我們要如何活著？</strong><p>V8.2 · Film Forest × Thought Universe</p></div></footer>
+<footer><div class="wrap"><p>🌍 世界 → 🤝 他人 → 🪞 自我 → 🌙 記憶 → 🌌 存在 → 🎭 表達</p><strong>所有枝條最後，都可能重新交會在同一個問題：我們要如何活著？</strong><p>V8.3.1.1 · Film Forest × Thought Universe</p></div></footer>
 <script src="mood-data.js"></script>
 <script src="movies-data.js"></script><script src="thought-data.js"></script>
 <script>
@@ -306,6 +520,90 @@ function initJourney(){
   initYearReview();
 }
 
-function init(){heroMovieCount.textContent=`🎬 ${DATA.movies.length}+ 電影座標`;DATA.zones.forEach(z=>zoneSelect.add(new Option(`${z.icon} ${z.name}`,z.name)));searchInput.oninput=renderMovies;zoneSelect.onchange=e=>{selectedZone=e.target.value;renderMovies()};renderZones();renderMovies();const cs=connectionSelect;[...DATA.movies].sort((a,b)=>a.title.localeCompare(b.title,'zh-Hant')).forEach(m=>cs.add(new Option(m.title,m.title)));cs.onchange=()=>renderConnection(cs.value);if(DATA.movies.length){cs.value=DATA.movies.find(m=>m.title==='千年女優')?.title||DATA.movies[0].title;renderConnection(cs.value)}renderDomains();initNotes();initAdd();initJourney();initModes();dialogClose.onclick=()=>movieDialog.close();document.addEventListener('keydown',e=>{if(e.key==='Escape'&&movieDialog.open)movieDialog.close()})}init();
+
+/* ================= V8.3.1 Mood Manager ================= */
+let MOOD_DRAFT = JSON.parse(JSON.stringify(MOODS));
+
+function renderMoodManager(){
+  const list=document.getElementById('moodManagerList');
+  if(!list)return;
+  list.innerHTML='';
+  MOOD_DRAFT.forEach((m,i)=>{
+    const row=document.createElement('div');
+    row.className='mood-row';
+    row.innerHTML=`
+      <div class="mood-order">
+        <button type="button" data-up="${i}" aria-label="往上">↑</button>
+        <button type="button" data-down="${i}" aria-label="往下">↓</button>
+      </div>
+      <input class="mood-label" data-i="${i}" value="${esc(m.label)}" aria-label="標籤名稱">
+      <input class="mood-id" data-id-i="${i}" value="${esc(m.id)}" aria-label="標籤ID">
+      <button class="mood-delete" type="button" data-del="${i}">刪除</button>`;
+    list.appendChild(row);
+  });
+
+  list.querySelectorAll('[data-up]').forEach(b=>b.onclick=()=>{
+    const i=Number(b.dataset.up); if(i<=0)return;
+    [MOOD_DRAFT[i-1],MOOD_DRAFT[i]]=[MOOD_DRAFT[i],MOOD_DRAFT[i-1]];
+    renderMoodManager();
+  });
+  list.querySelectorAll('[data-down]').forEach(b=>b.onclick=()=>{
+    const i=Number(b.dataset.down); if(i>=MOOD_DRAFT.length-1)return;
+    [MOOD_DRAFT[i+1],MOOD_DRAFT[i]]=[MOOD_DRAFT[i],MOOD_DRAFT[i+1]];
+    renderMoodManager();
+  });
+  list.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+    const i=Number(b.dataset.del);
+    if(confirm(`刪除「${MOOD_DRAFT[i].label}」？`)){MOOD_DRAFT.splice(i,1);renderMoodManager();}
+  });
+  list.querySelectorAll('.mood-label').forEach(inp=>inp.oninput=()=>{
+    MOOD_DRAFT[Number(inp.dataset.i)].label=inp.value;
+  });
+  list.querySelectorAll('.mood-id').forEach(inp=>inp.oninput=()=>{
+    MOOD_DRAFT[Number(inp.dataset.idI)].id=inp.value.trim();
+  });
+}
+
+function validMoodId(id){
+  return /^[a-z0-9_-]+$/.test(id);
+}
+function initMoodManager(){
+  const addBtn=document.getElementById('addMoodBtn');
+  if(!addBtn)return;
+  renderMoodManager();
+
+  addBtn.onclick=()=>{
+    const label=newMoodLabel.value.trim();
+    const id=newMoodId.value.trim();
+    if(!label){moodManagerStatus.textContent='請輸入顯示名稱。';return}
+    if(!id||!validMoodId(id)){moodManagerStatus.textContent='ID 請使用英文小寫、數字、底線或連字號。';return}
+    if(MOOD_DRAFT.some(m=>m.id===id)){moodManagerStatus.textContent='這個 ID 已經存在。';return}
+    MOOD_DRAFT.push({id,label});
+    newMoodLabel.value='';newMoodId.value='';
+    moodManagerStatus.textContent='✓ 已加入草稿。';
+    renderMoodManager();
+  };
+
+  resetMoodDraftBtn.onclick=()=>{
+    MOOD_DRAFT=JSON.parse(JSON.stringify(MOODS));
+    moodManagerStatus.textContent='已還原為目前網站標籤。';
+    renderMoodManager();
+  };
+
+  downloadMoodDataBtn.onclick=()=>{
+    const bad=MOOD_DRAFT.find(m=>!m.label.trim()||!validMoodId(m.id)||MOOD_DRAFT.filter(x=>x.id===m.id).length>1);
+    if(bad){moodManagerStatus.textContent='請先檢查空白名稱、ID 格式或重複 ID。';return}
+    const content=`// 我們如何活著｜V8.3.1 當下狀態資料
+window.MOOD_DATA = ${JSON.stringify(MOOD_DRAFT,null,2)};
+`;
+    const blob=new Blob([content],{type:'text/javascript;charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='mood-data.js';a.click();
+    URL.revokeObjectURL(url);
+    moodManagerStatus.textContent='✓ 已下載新版 mood-data.js。';
+  };
+}
+
+function init(){heroMovieCount.textContent=`🎬 ${DATA.movies.length}+ 電影座標`;DATA.zones.forEach(z=>zoneSelect.add(new Option(`${z.icon} ${z.name}`,z.name)));searchInput.oninput=renderMovies;zoneSelect.onchange=e=>{selectedZone=e.target.value;renderMovies()};renderZones();renderMovies();const cs=connectionSelect;[...DATA.movies].sort((a,b)=>a.title.localeCompare(b.title,'zh-Hant')).forEach(m=>cs.add(new Option(m.title,m.title)));cs.onchange=()=>renderConnection(cs.value);if(DATA.movies.length){cs.value=DATA.movies.find(m=>m.title==='千年女優')?.title||DATA.movies[0].title;renderConnection(cs.value)}renderDomains();initNotes();initAdd();initJourney();initMoodManager();initModes();dialogClose.onclick=()=>movieDialog.close();document.addEventListener('keydown',e=>{if(e.key==='Escape'&&movieDialog.open)movieDialog.close()})}init();
 </script>
 </body></html>
