@@ -374,6 +374,52 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
   }
 }
 
+
+/* ================= 人生區域卡片：統一插圖比例 ================= */
+.zone-card{
+  display:flex !important;
+  flex-direction:column !important;
+  overflow:hidden !important;
+}
+.zone-cover{
+  position:relative !important;
+  width:100% !important;
+  height:auto !important;
+  aspect-ratio:16 / 9 !important;
+  flex:0 0 auto !important;
+  overflow:hidden !important;
+  border-radius:18px 18px 0 0 !important;
+  background:#dfe5dc !important;
+}
+.zone-cover img{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  max-width:none !important;
+  object-fit:cover !important;
+  object-position:center center !important;
+}
+.zone-card-body{
+  flex:1 1 auto !important;
+}
+
+/* 讓八張卡片在同一列有一致的視覺高度 */
+.zone-grid{
+  align-items:stretch !important;
+}
+.zone-card h3{
+  line-height:1.3 !important;
+}
+
+/* 新增電影說明：去掉版本／工程語氣，讓它像作品的一部分 */
+#addMode .mode-intro,
+#addMode .intro,
+.add-movie-intro{
+  max-width:780px;
+  color:var(--muted);
+  line-height:1.75;
+}
+
 </style>
 </head>
 <body>
@@ -493,7 +539,7 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
 </div>
 
 <div id="notesMode" class="mode-panel"><section class="notes-intro"><p class="eyebrow">MY CINEMA NOTES</p><h2 class="serif">我的電影筆記</h2><p>這不是影評作業，而是「此刻的我」看完電影後留下的思想痕跡。筆記先存在這台瀏覽器，也可匯出備份。</p></section><section class="notes-layout"><div class="note-editor"><label>選擇電影<select id="noteMovieSelect"></select></label><label>💭 我的觀看<textarea id="noteView" rows="5"></textarea></label><label>❓ 電影留給我的問題<textarea id="noteQuestions" rows="6" placeholder="一行一個問題"></textarea></label><label>🌌 思想座標<input id="notePhilosophy" type="text" placeholder="記憶、自我、時間、存在…"></label><label>📖 完整感想<textarea id="noteReview" rows="10"></textarea></label><div class="note-actions"><button id="saveNoteBtn">儲存筆記</button><button id="clearNoteBtn" class="secondary">清除筆記</button><button id="exportNotesBtn">匯出 JSON</button><label class="import-label">匯入 JSON<input id="importNotesInput" type="file" accept=".json,application/json" style="display:none"></label></div><p id="noteStatus" class="note-status"></p></div><aside class="note-help"><h3>筆記會如何使用？</h3><p class="muted">電影詳細頁會優先顯示你在瀏覽器留下的內容；正式想公開的內容，再寫進 <code>movies-data.js</code> 即可。</p><hr><p class="muted">幾年後重看同一部電影，你也可以直接改寫。這張地圖可以留下思想的年輪。</p></aside></section></div>
-<div id="addMode" class="mode-panel"><section class="add-intro"><p class="eyebrow">ADD A MOVIE</p><h2 class="serif">新增電影</h2><p>V7 仍然資料驅動：新增電影不需要碰網站程式。人生面向與思想領域都由資料自動建立連結。</p></section><section class="add-layout"><div class="add-form"><label>電影名稱<input id="genTitle"></label><label>年份<input id="genYear" type="number" min="1888" max="2100"></label><div><h3>🌲 人生面向</h3><div id="genLifeTags" class="check-grid"></div></div><label>核心關鍵字<input id="genThemes" placeholder="理解、觀看、偏見、身分"></label><div><h3>🌌 思想領域</h3><div id="genThoughtDomains" class="check-grid"></div></div><label>💭 我的觀看<textarea id="genView"></textarea></label><label>❓ 這部電影自己的問題<textarea id="genQuestions" placeholder="一行一個問題"></textarea></label><label>🌌 思想關鍵字<input id="genPhilosophy" placeholder="自我、意識、自由、記憶…"></label><label>📖 完整感想<textarea id="genReview"></textarea></label><div class="note-actions"><button id="genPreviewBtn">產生資料預覽</button><button id="genDownloadBtn">下載更新後 movies-data.js</button></div><p id="genStatus" class="note-status"></p></div><aside class="add-help"><h3>資料預覽</h3><pre id="genOutput">填好資料後按「產生資料預覽」。</pre><p class="muted">下載新的 <code>movies-data.js</code> 後，回 GitHub 覆蓋舊檔並 Commit；<code>index.html</code> 不需要跟著改。</p></aside></section></div>
+<div id="addMode" class="mode-panel"><section class="add-intro"><p class="eyebrow">ADD A MOVIE</p><h2 class="serif">新增電影</h2><p>把看過的電影放進地圖，也留下它與人生、思想和當下心境的連結。新增後，電影會自動出現在相關的探索區域。</p></section><section class="add-layout"><div class="add-form"><label>電影名稱<input id="genTitle"></label><label>年份<input id="genYear" type="number" min="1888" max="2100"></label><div><h3>🌲 人生面向</h3><div id="genLifeTags" class="check-grid"></div></div><label>核心關鍵字<input id="genThemes" placeholder="理解、觀看、偏見、身分"></label><div><h3>🌌 思想領域</h3><div id="genThoughtDomains" class="check-grid"></div></div><label>💭 我的觀看<textarea id="genView"></textarea></label><label>❓ 這部電影自己的問題<textarea id="genQuestions" placeholder="一行一個問題"></textarea></label><label>🌌 思想關鍵字<input id="genPhilosophy" placeholder="自我、意識、自由、記憶…"></label><label>📖 完整感想<textarea id="genReview"></textarea></label><div class="note-actions"><button id="genPreviewBtn">產生資料預覽</button><button id="genDownloadBtn">下載更新後 movies-data.js</button></div><p id="genStatus" class="note-status"></p></div><aside class="add-help"><h3>資料預覽</h3><pre id="genOutput">填好資料後按「產生資料預覽」。</pre><p class="muted">下載新的 <code>movies-data.js</code> 後，回 GitHub 覆蓋舊檔並 Commit；<code>index.html</code> 不需要跟著改。</p></aside></section></div>
 </main>
 <dialog id="movieDialog"><button class="dialog-close" id="dialogClose" aria-label="關閉">×</button><div id="dialogContent"></div></dialog>
 <footer><div class="wrap"><p>🌍 世界 → 🤝 他人 → 🪞 自我 → 🌙 記憶 → 🌌 存在 → 🎭 表達</p><strong>所有枝條最後，都可能重新交會在同一個問題：我們要如何活著？</strong><p>.1 · Film Forest × Thought Universe</p></div></footer>
