@@ -78,7 +78,7 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
 @media(max-width:820px){.journey-editor{grid-template-columns:1fr}.mood-results{grid-template-columns:1fr}.footprint-toolbar{grid-template-columns:1fr}.journey-grid{grid-template-columns:1fr}}
 
 
-/* ================= V8.3.1 mood links + yearly review ================= */
+/* =================  mood links + yearly review ================= */
 .mood-picker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .mood-check{display:flex;gap:8px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:.9rem;font-weight:700}
 .mood-check input{width:auto;margin-top:2px}
@@ -94,7 +94,7 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
 @media(max-width:720px){.mood-picker,.review-list{grid-template-columns:1fr}.review-stats{grid-template-columns:repeat(2,1fr)}}
 
 
-/* ================= V8.3.1 Mood Manager ================= */
+/* =================  Mood Manager ================= */
 .mood-manager-shell{
   margin:36px 0 54px;
   padding:28px;
@@ -173,7 +173,7 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
 }
 
 
-/* ================= V8.3.1.1 Art Direction Polish ================= */
+/* ================= .1 Art Direction Polish ================= */
 /* Hero：把原始插圖右側的輪播箭頭／白色殘邊裁出畫面，不修改插圖主體 */
 .hero-art{background:#132720}
 .hero-art img{
@@ -264,6 +264,24 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
   .hero-art img{width:114%}
   .hero-art figcaption{font-size:.9rem;left:12px;right:12px;bottom:12px}
   .visual-chapter .chapter-art img,.coordinates-art img{width:96%;height:96%;padding:10px}
+}
+
+
+/* ================= Public UI cleanup ================= */
+/* 電影座標：移除沒有資訊功能的裝飾圖，讓電影本身成為主角 */
+.coordinates-layout{
+  grid-template-columns:1fr !important;
+}
+.coordinates-art{
+  display:none !important;
+}
+.coordinates-grid{
+  width:100%;
+}
+
+/* 公開網站不顯示內部版本／開發語彙 */
+.version-label,.build-label,.dev-only{
+  display:none !important;
 }
 
 </style>
@@ -388,7 +406,7 @@ footer{padding:44px 0 58px;border-top:1px solid var(--line);background:#e9e3d7;c
 <div id="addMode" class="mode-panel"><section class="add-intro"><p class="eyebrow">ADD A MOVIE</p><h2 class="serif">新增電影</h2><p>V7 仍然資料驅動：新增電影不需要碰網站程式。人生面向與思想領域都由資料自動建立連結。</p></section><section class="add-layout"><div class="add-form"><label>電影名稱<input id="genTitle"></label><label>年份<input id="genYear" type="number" min="1888" max="2100"></label><div><h3>🌲 人生面向</h3><div id="genLifeTags" class="check-grid"></div></div><label>核心關鍵字<input id="genThemes" placeholder="理解、觀看、偏見、身分"></label><div><h3>🌌 思想領域</h3><div id="genThoughtDomains" class="check-grid"></div></div><label>💭 我的觀看<textarea id="genView"></textarea></label><label>❓ 這部電影自己的問題<textarea id="genQuestions" placeholder="一行一個問題"></textarea></label><label>🌌 思想關鍵字<input id="genPhilosophy" placeholder="自我、意識、自由、記憶…"></label><label>📖 完整感想<textarea id="genReview"></textarea></label><div class="note-actions"><button id="genPreviewBtn">產生資料預覽</button><button id="genDownloadBtn">下載更新後 movies-data.js</button></div><p id="genStatus" class="note-status"></p></div><aside class="add-help"><h3>資料預覽</h3><pre id="genOutput">填好資料後按「產生資料預覽」。</pre><p class="muted">下載新的 <code>movies-data.js</code> 後，回 GitHub 覆蓋舊檔並 Commit；<code>index.html</code> 不需要跟著改。</p></aside></section></div>
 </main>
 <dialog id="movieDialog"><button class="dialog-close" id="dialogClose" aria-label="關閉">×</button><div id="dialogContent"></div></dialog>
-<footer><div class="wrap"><p>🌍 世界 → 🤝 他人 → 🪞 自我 → 🌙 記憶 → 🌌 存在 → 🎭 表達</p><strong>所有枝條最後，都可能重新交會在同一個問題：我們要如何活著？</strong><p>V8.3.1.1 · Film Forest × Thought Universe</p></div></footer>
+<footer><div class="wrap"><p>🌍 世界 → 🤝 他人 → 🪞 自我 → 🌙 記憶 → 🌌 存在 → 🎭 表達</p><strong>所有枝條最後，都可能重新交會在同一個問題：我們要如何活著？</strong><p>.1 · Film Forest × Thought Universe</p></div></footer>
 <script src="mood-data.js"></script>
 <script src="movies-data.js"></script><script src="thought-data.js"></script>
 <script>
@@ -521,7 +539,7 @@ function initJourney(){
 }
 
 
-/* ================= V8.3.1 Mood Manager ================= */
+/* =================  Mood Manager ================= */
 let MOOD_DRAFT = JSON.parse(JSON.stringify(MOODS));
 
 function renderMoodManager(){
@@ -593,7 +611,7 @@ function initMoodManager(){
   downloadMoodDataBtn.onclick=()=>{
     const bad=MOOD_DRAFT.find(m=>!m.label.trim()||!validMoodId(m.id)||MOOD_DRAFT.filter(x=>x.id===m.id).length>1);
     if(bad){moodManagerStatus.textContent='請先檢查空白名稱、ID 格式或重複 ID。';return}
-    const content=`// 我們如何活著｜V8.3.1 當下狀態資料
+    const content=`// 我們如何活著｜ 當下狀態資料
 window.MOOD_DATA = ${JSON.stringify(MOOD_DRAFT,null,2)};
 `;
     const blob=new Blob([content],{type:'text/javascript;charset=utf-8'});
